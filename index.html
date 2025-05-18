@@ -4,28 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Calculadora Carga VE</title>
-<!-- Favicon básico -->
-<link rel="icon" href="icon.png">
 
-<!-- Iconos para Apple/iOS -->
-<link rel="apple-touch-icon" href="icon.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Nombre de tu App">
-
-<!-- Color del tema para la interfaz del navegador -->
-<meta name="theme-color" content="#4285f4">
+    <link rel="icon" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Carga VE Calc">
-    <meta name="theme-color" content="#007aff"> <style>
+    <meta name="theme-color" content="#007aff">
+    <style>
         /* Estilos generales del cuerpo de la página */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f0f2f5; /* Un gris claro estándar de iOS para fondos de sistema/ajustes */
-            color: #1c1c1e; /* Color de texto primario oscuro de iOS */
+            background-color: #f0f2f5;
+            color: #1c1c1e;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -35,84 +28,105 @@
 
         /* Contenedor principal de la aplicación */
         .container {
-            background-color: #ffffff; /* Fondo blanco para el contenido principal */
+            background-color: #ffffff;
             padding: 28px;
-            border-radius: 14px; /* Bordes redondeados más suaves, comunes en iOS */
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* Sombra más sutil */
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             width: 100%;
             max-width: 420px;
             box-sizing: border-box;
-            border: 1px solid #E5E5EA; /* Borde muy sutil, como los separadores de iOS */
+            border: 1px solid #E5E5EA;
         }
 
         /* Título de la aplicación */
         h1 {
-            color: #007aff; /* Azul Apple */
+            color: #007aff;
             text-align: center;
-            font-size: 1.9em; /* Ligeramente más grande */
-            font-weight: 600; /* Semibold */
+            font-size: 1.9em;
+            font-weight: 600;
             margin-top: 0;
-            margin-bottom: 35px;
+            margin-bottom: 25px; /* Reducido un poco para el nuevo botón */
         }
+
+        /* Estilo para el selector de modo */
+        .modo-selector {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .modo-selector button {
+            background-color: #5ac8fa; /* Azul claro, diferente del botón principal */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em; /* Ajustado */
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+        }
+
+        .modo-selector button:active {
+            background-color: #4ba9d1;
+            transform: scale(0.98);
+        }
+
 
         /* Estilo para las etiquetas de los campos */
         label {
             display: block;
-            margin-bottom: 10px; /* Más espacio */
-            font-weight: 500; /* Medium weight */
-            color: #3c3c43; /* Color de texto secundario de iOS */
-            font-size: 0.9em; /* Ligeramente más pequeño para un look más refinado */
-            padding-left: 2px; /* Pequeño padding para alineación */
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #3c3c43;
+            font-size: 0.9em;
+            padding-left: 2px;
         }
 
         /* Estilo para los campos de entrada numérica */
         input[type="number"] {
             width: 100%;
-            padding: 16px; /* Padding generoso para una apariencia y toque modernos */
-            margin-bottom: 22px; /* Más espacio entre campos */
-            border: 1px solid #D1D1D6; /* Borde gris claro, común en campos de iOS */
-            border-radius: 10px; /* Bordes más redondeados */
+            padding: 16px;
+            margin-bottom: 22px;
+            border: 1px solid #D1D1D6;
+            border-radius: 10px;
             box-sizing: border-box;
-            font-size: 1.05em; /* Tamaño de fuente legible */
+            font-size: 1.05em;
             color: #1c1c1e;
-            background-color: #f8f8f8; /* Fondo ligeramente gris para los inputs */
+            background-color: #f8f8f8;
             -webkit-appearance: none;
             -moz-appearance: textfield;
             appearance: textfield;
             transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
         input[type="number"]:focus {
-            border-color: #007aff; /* Resaltar con el color de acento al enfocar */
-            box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2); /* Sutil brillo exterior al enfocar */
+            border-color: #007aff;
+            box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
             outline: none;
             background-color: #fff;
         }
 
-
-        /* Oculta las flechas en los campos numéricos */
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
 
-        /* Estilo del botón de calcular */
-        button {
+        /* Estilo del botón de calcular principal */
+        #btnCalcular { /* ID añadido para manipulación */
             background-color: #007aff;
             color: white;
             padding: 16px;
             border: none;
-            border-radius: 10px; /* Consistente con los inputs */
+            border-radius: 10px;
             width: 100%;
-            font-size: 1.15em; /* Ligeramente más grande */
-            font-weight: 500; /* Medium */
+            font-size: 1.15em;
+            font-weight: 500;
             cursor: pointer;
             transition: background-color 0.2s ease-in-out, transform 0.1s ease;
             margin-top: 15px;
         }
 
-        /* Efecto al presionar el botón */
-        button:active {
+        #btnCalcular:active {
             background-color: #005ec4;
             transform: scale(0.98);
         }
@@ -121,29 +135,28 @@
         #resultado {
             margin-top: 30px;
             padding: 18px;
-            background-color: #f0f2f5; /* Fondo similar al del body, para un efecto de "grupo" */
-            border: 1px solid #E5E5EA; /* Borde sutil */
-            border-radius: 10px; /* Consistente */
+            background-color: #f0f2f5;
+            border: 1px solid #E5E5EA;
+            border-radius: 10px;
             text-align: center;
             font-size: 1.1em;
             font-weight: 500;
-            line-height: 1.65; /* Mejor legibilidad */
-            color: #1c1c1e; /* Color de texto principal */
+            line-height: 1.65;
+            color: #1c1c1e;
             display: none;
         }
         #resultado strong {
-            font-weight: 600; /* Semibold para los valores */
+            font-weight: 600;
         }
-
 
         /* Estilo para los mensajes de error */
         .error-mensaje {
-            color: #ff3b30; /* Rojo de error de iOS */
-            background-color: #ffeef0; /* Fondo rojo muy claro */
-            border: 1px solid #ffb8bf; /* Borde rojo claro */
+            color: #ff3b30;
+            background-color: #ffeef0;
+            border: 1px solid #ffb8bf;
             padding: 14px;
             margin-bottom: 20px;
-            border-radius: 10px; /* Consistente */
+            border-radius: 10px;
             text-align: center;
             font-size: 0.95em;
             display: none;
@@ -153,6 +166,10 @@
 <body>
     <div class="container">
         <h1>Calculadora de Carga VE</h1>
+
+        <div class="modo-selector">
+            <button id="btnCambiarModo" onclick="cambiarModoCalculo()">Cambiar a Calcular Porcentaje</button>
+        </div>
 
         <div id="mensajeError" class="error-mensaje"></div>
 
@@ -166,9 +183,18 @@
             <input type="number" id="porcentajeActual" inputmode="numeric" placeholder="Ej: 20" min="0" max="100" step="1">
         </div>
 
-        <div>
+        <div id="divPorcentajeObjetivo">
             <label for="porcentajeObjetivo">Porcentaje objetivo de batería (%):</label>
             <input type="number" id="porcentajeObjetivo" inputmode="numeric" placeholder="Ej: 80" min="0" max="100" step="1">
+        </div>
+
+        <div id="divTiempoCargaHoras" style="display: none;">
+            <label for="horasCarga">Horas de carga:</label>
+            <input type="number" id="horasCarga" inputmode="numeric" placeholder="Ej: 2" min="0" step="1">
+        </div>
+        <div id="divTiempoCargaMinutos" style="display: none;">
+            <label for="minutosCarga">Minutos de carga:</label>
+            <input type="number" id="minutosCarga" inputmode="numeric" placeholder="Ej: 30" min="0" max="59" step="1">
         </div>
 
         <div>
@@ -176,19 +202,32 @@
             <input type="number" id="potenciaCarga" inputmode="decimal" placeholder="Ej: 7.4" min="0.1" step="0.1">
         </div>
 
-        <button onclick="calcularTiempoCarga()">Calcular Tiempo</button>
+        <button id="btnCalcular" onclick="realizarCalculo()">Calcular Tiempo</button>
 
         <div id="resultado" style="display: none;"></div>
     </div>
 
     <script>
+        // Estado actual de la calculadora
+        let currentMode = 'tiempo'; // 'tiempo' o 'porcentaje'
+
         // Referencias a los elementos del DOM
         const capacidadBateriaEl = document.getElementById('capacidadBateria');
         const porcentajeActualEl = document.getElementById('porcentajeActual');
-        const porcentajeObjetivoEl = document.getElementById('porcentajeObjetivo');
         const potenciaCargaEl = document.getElementById('potenciaCarga');
         const resultadoDiv = document.getElementById('resultado');
         const mensajeErrorDiv = document.getElementById('mensajeError');
+        const btnCalcularEl = document.getElementById('btnCalcular');
+        const btnCambiarModoEl = document.getElementById('btnCambiarModo');
+
+        // Elementos específicos de cada modo
+        const divPorcentajeObjetivoEl = document.getElementById('divPorcentajeObjetivo');
+        const porcentajeObjetivoEl = document.getElementById('porcentajeObjetivo');
+
+        const divTiempoCargaHorasEl = document.getElementById('divTiempoCargaHoras');
+        const horasCargaEl = document.getElementById('horasCarga');
+        const divTiempoCargaMinutosEl = document.getElementById('divTiempoCargaMinutos');
+        const minutosCargaEl = document.getElementById('minutosCarga');
 
         // Función para mostrar mensajes de error
         function mostrarError(mensaje) {
@@ -197,33 +236,57 @@
             resultadoDiv.style.display = 'none';
         }
 
-        // Función para limpiar mensajes de error
-        function limpiarError() {
+        // Función para limpiar mensajes de error y resultados
+        function limpiarErrorYResultado() {
             mensajeErrorDiv.style.display = 'none';
             mensajeErrorDiv.textContent = '';
+            resultadoDiv.style.display = 'none';
+            resultadoDiv.innerHTML = '';
         }
 
-        // Listener para los inputs, para limpiar errores al empezar a escribir
-        [capacidadBateriaEl, porcentajeActualEl, porcentajeObjetivoEl, potenciaCargaEl].forEach(input => {
-            input.addEventListener('input', limpiarError);
-            // También limpiar el resultado si se modifica un input después de calcular
-            input.addEventListener('input', () => {
-                if (resultadoDiv.style.display === 'block') {
-                    resultadoDiv.style.display = 'none';
-                }
-            });
+        // Listeners para los inputs, para limpiar errores y resultados al empezar a escribir
+        const inputsRelevantes = [
+            capacidadBateriaEl, porcentajeActualEl, potenciaCargaEl, // Comunes
+            porcentajeObjetivoEl, // Modo Tiempo
+            horasCargaEl, minutosCargaEl // Modo Porcentaje
+        ];
+        inputsRelevantes.forEach(input => {
+            if (input) { // Verificar que el elemento exista
+                input.addEventListener('input', limpiarErrorYResultado);
+            }
         });
 
-        // Función principal para calcular el tiempo de carga
-        function calcularTiempoCarga() {
-            limpiarError();
+        // Función para cambiar el modo de cálculo
+        function cambiarModoCalculo() {
+            limpiarErrorYResultado();
+            if (currentMode === 'tiempo') {
+                currentMode = 'porcentaje';
+                btnCambiarModoEl.textContent = 'Cambiar a Calcular Tiempo';
+                btnCalcularEl.textContent = 'Calcular Porcentaje Alcanzado';
+
+                divPorcentajeObjetivoEl.style.display = 'none';
+                divTiempoCargaHorasEl.style.display = 'block';
+                divTiempoCargaMinutosEl.style.display = 'block';
+            } else {
+                currentMode = 'tiempo';
+                btnCambiarModoEl.textContent = 'Cambiar a Calcular Porcentaje';
+                btnCalcularEl.textContent = 'Calcular Tiempo Estimado';
+
+                divPorcentajeObjetivoEl.style.display = 'block';
+                divTiempoCargaHorasEl.style.display = 'none';
+                divTiempoCargaMinutosEl.style.display = 'none';
+            }
+        }
+
+        // Función principal que decide qué cálculo realizar
+        function realizarCalculo() {
+            limpiarErrorYResultado();
 
             const capacidadBateria = parseFloat(capacidadBateriaEl.value);
             const porcentajeActual = parseFloat(porcentajeActualEl.value);
-            const porcentajeObjetivo = parseFloat(porcentajeObjetivoEl.value);
             const potenciaCarga = parseFloat(potenciaCargaEl.value);
 
-            // Validaciones
+            // Validaciones comunes
             if (isNaN(capacidadBateria) || capacidadBateria <= 0) {
                 mostrarError("Introduce una capacidad de batería válida (mayor que 0 kWh).");
                 capacidadBateriaEl.focus();
@@ -234,14 +297,26 @@
                 porcentajeActualEl.focus();
                 return;
             }
-            if (isNaN(porcentajeObjetivo) || porcentajeObjetivo < 0 || porcentajeObjetivo > 100) {
-                mostrarError("El porcentaje objetivo debe estar entre 0 y 100%.");
-                porcentajeObjetivoEl.focus();
-                return;
-            }
             if (isNaN(potenciaCarga) || potenciaCarga <= 0) {
                 mostrarError("Introduce una potencia de carga válida (mayor que 0 kW).");
                 potenciaCargaEl.focus();
+                return;
+            }
+
+            if (currentMode === 'tiempo') {
+                calcularTiempoCargaOriginal(capacidadBateria, porcentajeActual, potenciaCarga);
+            } else {
+                calcularPorcentajeAlcanzado(capacidadBateria, porcentajeActual, potenciaCarga);
+            }
+        }
+
+        // Función para calcular el tiempo de carga (Modo Original)
+        function calcularTiempoCargaOriginal(capacidadBateria, porcentajeActual, potenciaCarga) {
+            const porcentajeObjetivo = parseFloat(porcentajeObjetivoEl.value);
+
+            if (isNaN(porcentajeObjetivo) || porcentajeObjetivo < 0 || porcentajeObjetivo > 100) {
+                mostrarError("El porcentaje objetivo debe estar entre 0 y 100%.");
+                porcentajeObjetivoEl.focus();
                 return;
             }
             if (porcentajeActual >= porcentajeObjetivo) {
@@ -250,17 +325,63 @@
                 return;
             }
 
-            // Cálculo
             const kwhNecesarios = (capacidadBateria * (porcentajeObjetivo - porcentajeActual)) / 100;
             const tiempoEnHorasDecimal = kwhNecesarios / potenciaCarga;
             const horas = Math.floor(tiempoEnHorasDecimal);
             const minutos = Math.round((tiempoEnHorasDecimal - horas) * 60);
 
-            // Mostrar resultado
             resultadoDiv.innerHTML = `Energía a cargar: <strong>${kwhNecesarios.toFixed(2)} kWh</strong><br>
                                       Tiempo estimado: <strong>${horas} horas y ${minutos} minutos</strong>`;
             resultadoDiv.style.display = 'block';
         }
+
+        // Función para calcular el porcentaje alcanzado (Nuevo Modo)
+        function calcularPorcentajeAlcanzado(capacidadBateria, porcentajeActual, potenciaCarga) {
+            const horasCarga = parseFloat(horasCargaEl.value) || 0; // Default a 0 si está vacío o NaN
+            const minutosCarga = parseFloat(minutosCargaEl.value) || 0; // Default a 0 si está vacío o NaN
+
+            if (horasCarga < 0) {
+                mostrarError("Las horas de carga no pueden ser negativas.");
+                horasCargaEl.focus();
+                return;
+            }
+            if (minutosCarga < 0 || minutosCarga > 59) {
+                mostrarError("Los minutos de carga deben estar entre 0 y 59.");
+                minutosCargaEl.focus();
+                return;
+            }
+            if (horasCarga === 0 && minutosCarga === 0) {
+                mostrarError("Introduce un tiempo de carga mayor que cero.");
+                horasCargaEl.focus();
+                return;
+            }
+
+            const tiempoTotalCargaHoras = horasCarga + (minutosCarga / 60);
+            const kwhCargados = potenciaCarga * tiempoTotalCargaHoras;
+            const porcentajeGanado = (kwhCargados / capacidadBateria) * 100;
+            let porcentajeFinal = porcentajeActual + porcentajeGanado;
+
+            let mensajeExtra = "";
+            if (porcentajeFinal > 100) {
+                porcentajeFinal = 100;
+                mensajeExtra = "<br><small>(Se alcanzaría el 100% antes del tiempo total indicado)</small>";
+            }
+             if (porcentajeFinal < porcentajeActual) { // Caso donde la potencia o tiempo es tan bajo que no hay cambio visible
+                porcentajeFinal = porcentajeActual;
+            }
+
+
+            resultadoDiv.innerHTML = `Energía cargada: <strong>${kwhCargados.toFixed(2)} kWh</strong><br>
+                                      Porcentaje alcanzado: <strong>${porcentajeFinal.toFixed(1)}%</strong>
+                                      ${mensajeExtra}`;
+            resultadoDiv.style.display = 'block';
+        }
+
+        // Inicializar la UI para el modo por defecto (Calcular Tiempo)
+        // No es necesario llamar a cambiarModoCalculo() al inicio si los estilos por defecto ya están bien.
+        // Solo asegurar que el texto del botón de cálculo principal sea el correcto.
+        btnCalcularEl.textContent = 'Calcular Tiempo Estimado';
+
     </script>
 </body>
 </html>
